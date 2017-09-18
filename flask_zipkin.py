@@ -39,7 +39,7 @@ class Zipkin(object):
 
     def default_handler(self, encoded_span):
         try:
-            body = str.encode('\x0c\x00\x00\x00\x01') + encoded_span
+            body = encoded_span
             return requests.post(
                 self.app.config.get('ZIPKIN_DSN'),
                 data=body,
