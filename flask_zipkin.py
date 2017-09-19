@@ -10,7 +10,6 @@ from flask import g
 from flask import request
 from py_zipkin import zipkin
 
-
 __version_info__ = ('0', '0', '3')
 __version__ = '.'.join(__version_info__)
 __author__ = 'killpanda'
@@ -20,7 +19,6 @@ __all__ = ['Zipkin']
 
 
 class Zipkin(object):
-
     def _gen_random_id(self):
         return ''.join(
             random.choice(
@@ -39,10 +37,9 @@ class Zipkin(object):
 
     def default_handler(self, encoded_span):
         try:
-            body = encoded_span
             return requests.post(
                 self.app.config.get('ZIPKIN_DSN'),
-                data=body,
+                data=encoded_span,
                 headers={'Content-Type': 'application/x-thrift'},
                 timeout=1,
             )
@@ -101,7 +98,9 @@ class Zipkin(object):
             span_name='{0}.{1}'.format(request.endpoint, request.method),
             transport_handler=handler,
             sample_rate=self._sample_rate,
-            zipkin_attrs=zipkin_attrs
+            zipkin_attrs=zipkin_attrs,
+            host=self.app.config.get('APP_HOST', '127.0.0.1'),
+            port=self.app.config.get('APP_PORT', 0)
         )
         g._zipkin_span = span
         g._zipkin_span.start()
