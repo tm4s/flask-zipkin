@@ -106,7 +106,8 @@ class Zipkin(object):
         )
         g._zipkin_span = span
 
-        self.logging(data=json.dumps(request.args))
+        g._zipkin_span.logging_context.binary_annotations_dict.update(
+                data=json.dumps(request.args))
 
         g._zipkin_span.start()
 
