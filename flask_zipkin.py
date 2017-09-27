@@ -103,7 +103,6 @@ class Zipkin(object):
             zipkin_attrs=zipkin_attrs,
             host=self.app.config.get('APP_HOST', '127.0.0.1'),
             port=self.app.config.get('APP_PORT', 0),
-            binary_annotation=ipkin_core.AnnotationType.STRING
         )
         g._zipkin_span = span
 
