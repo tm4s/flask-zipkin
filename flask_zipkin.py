@@ -74,7 +74,7 @@ class Zipkin(object):
         if self._disable:
             return
 
-        zipkin.logging(data=json.dumps(request.args))
+        self.logging(data=json.dumps(request.args))
 
         _app_ctx_stack.top._view_func = \
             current_app.view_functions.get(request.endpoint)
