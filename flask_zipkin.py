@@ -11,6 +11,8 @@ from flask import request
 from py_zipkin import zipkin
 
 import simplejson as json
+from py_zipkin.thrift import create_binary_annotation
+from py_zipkin.thrift import zipkin_core
 
 __version_info__ = ('0', '0', '3')
 __version__ = '.'.join(__version_info__)
@@ -95,7 +97,6 @@ class Zipkin(object):
 
         handler = self._transport_handler or self.default_handler
 
-        self.update_tags(data=json.dumps(request.args))
 
         span = zipkin.zipkin_span(
             service_name=self.app.name,
@@ -105,6 +106,7 @@ class Zipkin(object):
             zipkin_attrs=zipkin_attrs,
             host=self.app.config.get('APP_HOST', '127.0.0.1'),
             port=self.app.config.get('APP_PORT', 0),
+            binary_annotations=create_binary_annotation('data','aaa',zipkin_core.AnnotationType.STRING,'172.17.0.1'),
         )
         g._zipkin_span = span
 
