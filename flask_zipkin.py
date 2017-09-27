@@ -106,8 +106,9 @@ class Zipkin(object):
             zipkin_attrs=zipkin_attrs,
             host=self.app.config.get('APP_HOST', '127.0.0.1'),
             port=self.app.config.get('APP_PORT', 0),
-            binary_annotations=create_binary_annotation('data','aaa',zipkin_core.AnnotationType.STRING,'172.17.0.1'),
         )
+        span.logging_context.binary_annotations_dict.update(data='aaaa')
+
         g._zipkin_span = span
 
         
