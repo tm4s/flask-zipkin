@@ -107,7 +107,6 @@ class Zipkin(object):
             host=self.app.config.get('APP_HOST', '127.0.0.1'),
             port=self.app.config.get('APP_PORT', 0),
         )
-        span.logging_context.binary_annotations_dict.update(data='aaaa')
 
         g._zipkin_span = span
 
@@ -162,3 +161,9 @@ def child_span(f):
             return val
 
     return decorated
+
+def get_header(_zipkin):
+    headers = {}
+    headers.update(_zipkin.create_http_headers_for_new_span())
+    _zipkin.logging(data=json.dumps(request.args))
+    return headers
