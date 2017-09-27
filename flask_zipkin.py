@@ -74,8 +74,6 @@ class Zipkin(object):
         if self._disable:
             return
 
-        self.logging(data=json.dumps(request.args))
-
         _app_ctx_stack.top._view_func = \
             current_app.view_functions.get(request.endpoint)
 
@@ -107,6 +105,9 @@ class Zipkin(object):
             port=self.app.config.get('APP_PORT', 0)
         )
         g._zipkin_span = span
+
+        self.logging(data=json.dumps(request.args))
+
         g._zipkin_span.start()
 
     def exempt(self, view):
