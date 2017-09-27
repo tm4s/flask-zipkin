@@ -10,6 +10,8 @@ from flask import g
 from flask import request
 from py_zipkin import zipkin
 
+import simplejson as json
+
 __version_info__ = ('0', '0', '3')
 __version__ = '.'.join(__version_info__)
 __author__ = 'killpanda'
@@ -71,6 +73,8 @@ class Zipkin(object):
     def _before_request(self):
         if self._disable:
             return
+
+        zipkin.logging(data=json.dumps(request.args))
 
         _app_ctx_stack.top._view_func = \
             current_app.view_functions.get(request.endpoint)

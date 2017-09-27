@@ -24,5 +24,6 @@ setup(
         'Flask',
         'py_zipkin>=0.4.0',
         'requests>=2.11.1',
+        'simplejson',
         ]
 )
