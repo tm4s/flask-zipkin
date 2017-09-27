@@ -95,6 +95,8 @@ class Zipkin(object):
 
         handler = self._transport_handler or self.default_handler
 
+        self.update_tags(data=json.dumps(request.args))
+
         span = zipkin.zipkin_span(
             service_name=self.app.name,
             span_name='{0}.{1}'.format(request.endpoint, request.method),
@@ -106,7 +108,7 @@ class Zipkin(object):
         )
         g._zipkin_span = span
 
-        self.update_tags(data=json.dumps(request.args))
+        
 
         g._zipkin_span.start()
 
