@@ -162,8 +162,8 @@ def child_span(f):
 
     return decorated
 
-def get_headers(_zipkin):
+def get_headers(_zipkin, _params):
     headers = {}
     headers.update(_zipkin.create_http_headers_for_new_span())
-    _zipkin.logging(data=json.dumps(request.args))
+    _zipkin.logging(parameters=json.dumps(_params))
     return headers
