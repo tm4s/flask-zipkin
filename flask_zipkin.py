@@ -165,5 +165,5 @@ def child_span(f):
 def get_headers(_zipkin, _params):
     headers = {}
     headers.update(_zipkin.create_http_headers_for_new_span())
-    _zipkin.logging(parameters=json.dumps(_params))
+    _zipkin.logging(parameters=_params)
     return headers
